@@ -39,16 +39,20 @@ const allDayTimetableController = async (req, res) => {
       const teacherName = teacher.name;
 
       teacher.schedule.forEach((entry) => {
-        const { class: className, day, subject } = entry;
+        const { class: className, day, subject, _id } = entry;
 
         if (!timetableByDay[day]) {
-          timetableByDay[day] = [];
+          timetableByDay[day] = {};
+        }
+        if (!timetableByDay[day][className]) {
+          timetableByDay[day][className] = [];
         }
 
-        timetableByDay[day].push({
-          class: className,
+        timetableByDay[day][className].push({
+          //class: className,
           teacher: teacherName,
           subject,
+          _id,
         });
       });
     });
