@@ -37,7 +37,7 @@ const allDayTimetableController = async (req, res) => {
 
     teachers.forEach((teacher) => {
       const teacherName = teacher.name;
-
+      const teacherId = teacher._id;
       teacher.schedule.forEach((entry) => {
         const { class: className, day, subject, _id } = entry;
 
@@ -52,7 +52,8 @@ const allDayTimetableController = async (req, res) => {
           //class: className,
           teacher: teacherName,
           subject,
-          _id,
+          scheduleId: _id,
+          teacherId: teacherId,
         });
       });
     });
@@ -88,7 +89,11 @@ const getAllTeachersController = async (req, res) => {
           timetableByTeacher[teacherName][className][day] = [];
         }
 
-        timetableByTeacher[teacherName][className][day].push({ subject });
+        timetableByTeacher[teacherName][className][day].push({
+          subject,
+          teacherId,
+          scheduleId: _id,
+        });
       });
     });
     console.log("Well Done Sattwik");
